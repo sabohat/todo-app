@@ -12,6 +12,13 @@ export enum TODO_STATUSES {
     COMPLETED = "done"
 }
 
+export const todoStatusList = (Object.keys(TODO_STATUSES) as (keyof typeof TODO_STATUSES)[]).map(
+    (key) => {
+        console.log(key);
+        return TODO_STATUSES[key];
+    },
+);
+
 export interface TodoItem {
     id: string;
     title: string;
