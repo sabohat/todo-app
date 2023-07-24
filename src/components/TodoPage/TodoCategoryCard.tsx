@@ -1,19 +1,21 @@
-import { TodoItem } from '@/constants/todo'
+import { statusColor, TodoItem, TODO_STATUSES } from '@/constants/todo'
 import React from 'react'
 import Todo from './Todo'
 
 export default function TodoCategoryCard ({ category, list, dispatch, mouseDown }: any) {
+    const bgColor = statusColor[category as TODO_STATUSES]
     return (
         <div
             data-category={category}
-            className='
+            className={`
         droppable
         select-none
         min-w-40 min-h-80
-        bg-blue-200
+        ${bgColor}
         rounded-md
         flex flex-col
-        '>
+        mx-2
+        `}>
             <span
                 className='
                 text-md capitalize 

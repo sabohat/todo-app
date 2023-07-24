@@ -154,7 +154,6 @@ export default function TodoList ({ todos, dispatch }: any) {
         w-full p-4 rounded-sm
         min-h-[500px]
         bg-white
-        space-x-3
         grid md:grid-cols-2 lg:grid-cols-5'
             ref={parentRef}
         >

@@ -14,7 +14,6 @@ export enum TODO_STATUSES {
 
 export const todoStatusList = (Object.keys(TODO_STATUSES) as (keyof typeof TODO_STATUSES)[]).map(
     (key) => {
-        console.log(key);
         return TODO_STATUSES[key];
     },
 );
@@ -25,4 +24,12 @@ export interface TodoItem {
     status: TODO_STATUSES;
     createdAt?: Date;
     deletedAt?: Date | null;
+}
+
+export const statusColor = {
+    [TODO_STATUSES.BACKLOG]: "bg-yellow-200",
+    [TODO_STATUSES.TODO]: "bg-blue-200",
+    [TODO_STATUSES.IN_PROGRESS]: "bg-pink-200",
+    [TODO_STATUSES.TEST]: "bg-gray-200",
+    [TODO_STATUSES.COMPLETED]: "bg-green-200"
 }
