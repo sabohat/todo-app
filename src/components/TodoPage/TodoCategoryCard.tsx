@@ -3,7 +3,7 @@ import React from 'react'
 import Todo from './Todo'
 
 export default function TodoCategoryCard ({ category, list, dispatch, mouseDown }: any) {
-    const bgColor = statusColor[category as TODO_STATUSES]
+    const bgColor = statusColor[category as TODO_STATUSES] || "bg-blue-300"
     return (
         <div
             data-category={category}
