@@ -13,6 +13,7 @@ export default function Todo ({ todo, dispatch, mouseDown }: any) {
             onMouseDown={(e) => mouseDown(e)}
             className='
         draggable
+        select-none
         bg-white rounded-lg flex flex-col p-3 m-3 space-y-3 shadow-md cursor-grab hover:shadow-xl'
         >
             <span>Title: {todo.title}</span>

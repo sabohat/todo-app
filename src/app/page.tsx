@@ -45,7 +45,6 @@ export default function Home () {
     <main className="w-full flex min-h-screen flex-col p-8 bg-gray-100">
       <>
         <h1 className='text-4xl text-blue-500'>To-do Application</h1>
-        <div>TodoList</div>
         <AddTodoSection dispatch={dispatch} />
         {todos && <TodoList todos={todos} dispatch={dispatch} />}
       </>

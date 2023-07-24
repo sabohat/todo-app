@@ -4,10 +4,11 @@ import Todo from './Todo'
 
 export default function TodoCategoryCard ({ category, list, dispatch, mouseDown }: any) {
     return (
-        <div 
-        data-category={category}
-        className='
+        <div
+            data-category={category}
+            className='
         droppable
+        select-none
         min-w-40 min-h-80
         bg-blue-200
         rounded-md
