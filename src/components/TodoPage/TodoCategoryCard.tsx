@@ -2,9 +2,12 @@ import { TodoItem } from '@/constants/todo'
 import React from 'react'
 import Todo from './Todo'
 
-export default function TodoCategoryCard ({ category, list, dispatch }: any) {
+export default function TodoCategoryCard ({ category, list, dispatch, mouseDown }: any) {
     return (
-        <div className='
+        <div 
+        data-category={category}
+        className='
+        droppable
         min-w-40 min-h-80
         bg-blue-200
         rounded-md
@@ -22,6 +25,7 @@ export default function TodoCategoryCard ({ category, list, dispatch }: any) {
                     key={todo.id}
                     todo={todo}
                     dispatch={dispatch}
+                    mouseDown={mouseDown}
                 />
             )}
         </div>
