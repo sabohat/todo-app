@@ -14,12 +14,6 @@ export default function TodoList ({ todos, dispatch }: any) {
         [TODO_STATUSES.COMPLETED]: [],
     })
 
-    // const [ball, setBall] = useState()
-    // const [parentNode, setParentNode] = useState()
-    const ballRef = useRef()
-    const parentNodeRef = useRef()
-
-
     useEffect(() => {
         const sortedObj: any = {
             [TODO_STATUSES.BACKLOG]: [],
@@ -47,28 +41,26 @@ export default function TodoList ({ todos, dispatch }: any) {
     const mouseDown = (event: any) => {
         if (event.target.dataset.type === 'button') return
 
-        const ball: any = event.target.closest('.draggable');
-        ballRef.current = ball
+        const draggableItem: any = event.target.closest('.draggable');
 
-        const parentNode = ball.parentNode
-        parentNodeRef.current = parentNode
+        const parentNode = draggableItem.parentNode
 
-        if (!ball) return console.log("nothing to grab here")
+        if (!draggableItem) return console.log("nothing to grab here")
 
-        let shiftX = event.clientX - ball.getBoundingClientRect().left;
-        let shiftY = event.clientY - ball.getBoundingClientRect().top;
+        let shiftX = event.clientX - draggableItem.getBoundingClientRect().left;
+        let shiftY = event.clientY - draggableItem.getBoundingClientRect().top;
 
         function moveAt (pageX: any, pageY: any) {
-            ball.style.left = pageX - shiftX + 'px';
-            ball.style.top = pageY - shiftY + 'px';
+            draggableItem.style.left = pageX - shiftX + 'px';
+            draggableItem.style.top = pageY - shiftY + 'px';
         }
 
         // to make it positioned relative to the parent - todo list container 
-        ball.style.position = 'absolute';
-        ball.style.zIndex = 1000;
-        document.body.append(ball);
+        draggableItem.style.position = 'absolute';
+        draggableItem.style.zIndex = 1000;
+        document.body.append(draggableItem);
 
-        // move our absolutely positioned ball under the pointer
+        // move our absolutely positioned draggableItem under the pointer
         moveAt(event.pageX, event.pageY);
 
         let currentDroppable: any = null;
@@ -76,21 +68,21 @@ export default function TodoList ({ todos, dispatch }: any) {
         function onMouseMove (event: any) {
             moveAt(event.pageX, event.pageY);
 
-            ball.hidden = true;
-            [...ball.children].map((el: any) => el.hidden = true)
+            draggableItem.hidden = true;
+            [...draggableItem.children].map((el: any) => el.hidden = true)
             let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
 
-            ball.hidden = false;
-            [...ball.children].map((el: any) => el.hidden = false)
+            draggableItem.hidden = false;
+            [...draggableItem.children].map((el: any) => el.hidden = false)
 
-            // mousemove events may trigger out of the window (when the ball is dragged off-screen)
+            // mousemove events may trigger out of the window (when the draggableItem is dragged off-screen)
             // if clientX/clientY are out of the window, then elementFromPoint returns null
             if (!elemBelow) {
-                ball.style.position = 'static';
-                ball.style.zIndex = 0;
+                draggableItem.style.position = 'static';
+                draggableItem.style.zIndex = 0;
                 // move the draggable into new parent
                 // if draggable is dropped to somewhere outside the box, move it back to its original parent
-                parentNode.appendChild(ball)
+                parentNode.appendChild(draggableItem)
                 document.removeEventListener('mousemove', onMouseMove);
                 return
             }
@@ -116,31 +108,34 @@ export default function TodoList ({ todos, dispatch }: any) {
             }
         }
 
-        // (2) move the ball on mousemove
+        // (2) move the draggableItem on mousemove
         document.addEventListener('mousemove', onMouseMove);
 
-        // (3) drop the ball, remove unneeded handlers
-        ball.onmouseup = function () {
-            ball.style.position = 'static';
-            ball.style.zIndex = 0;
+        // (3) drop the draggableItem, remove unneeded handlers
+        draggableItem.onmouseup = function () {
+            draggableItem.style.position = 'static';
+            draggableItem.style.zIndex = 0;
 
             // move back to parent ella nd let react handle the last move
             // to avoid react error: no el found
-            parentNode.appendChild(ball)
+            parentNode.appendChild(draggableItem)
+            draggableItem.classList.add('invisible');
 
             leaveDroppable(currentDroppable)
             document.removeEventListener('mousemove', onMouseMove);
-            ball.onmouseup = null;
+            draggableItem.onmouseup = null;
 
             if (currentDroppable) {
-                ball.classList.add('invisible');
+
                 dispatch({
                     type: TODO_ACTIONS.UPDATE_STATUS, payload: {
-                        id: ball.id,
+                        id: draggableItem.id,
                         status: currentDroppable.dataset.category
                     }
                 })
+
             }
+            draggableItem.classList.remove('invisible');
         };
     }
 
