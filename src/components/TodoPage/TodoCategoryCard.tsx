@@ -7,6 +7,7 @@ export default function TodoCategoryCard ({ category, list, dispatch, mouseDown 
     return (
         <div
             data-category={category}
+            data-test={`category-${category}`}
             className={`
         droppable
         select-none

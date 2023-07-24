@@ -39,7 +39,13 @@ function newTodo (title: string) {
 }
 
 export default function Home () {
-  const [todos, dispatch] = useReducer<any>(reducer, [])
+  const [todos, dispatch] = useReducer<any>(reducer, [{
+    id: nanoid(),
+    title: "First Task",
+    status: TODO_STATUSES.TODO,
+    createdAt: Date.now(),
+    deletedAt: null,
+  }])
 
   return (
     <main className="w-full flex min-h-screen flex-col p-8 bg-gray-100">

@@ -13,10 +13,12 @@ export default function AddTodoSection ({ dispatch }: any) {
     return (
         <div className='flex space-x-3 mt-5'>
             <input
+                data-test='new-todo'
                 className='p-2 rounded-md'
                 value={title}
                 onChange={(e) => setTitle(e.target.value)} />
             <Button
+                dataTest='add-todo-btn'
                 text="Add Task"
                 onClick={() => {
                     if (!isValidTitle(title))
